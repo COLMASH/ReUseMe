@@ -24,7 +24,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./app/assets/favicon.png"
     },
     "description": "A place where you can sell or donate rehab medical equipment that you dont need any more"
   }
