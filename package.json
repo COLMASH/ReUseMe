@@ -38,6 +38,9 @@
     "react-native-screens": "~3.4.0",
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
