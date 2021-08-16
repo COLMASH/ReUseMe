@@ -7,13 +7,15 @@ import routes from "../navigation/routes";
 function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
-      blurRadius={10}
+      blurRadius={2}
       style={styles.background}
-      source={require("../assets/background.jpg")}
+      source={require("../assets/background1.png")}
     >
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-        <Text style={styles.tagline}>Sell What You Don't Need</Text>
+        <Image style={styles.logo} source={require("../assets/logoGris.png")} />
+        <Text style={styles.tagline}>
+          Sell or donate rehab medical equipment that you don't use anymore
+        </Text>
       </View>
       <View style={styles.buttonsContainer}>
         <Button
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
   },
   logoContainer: {
     position: "absolute",
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "600",
     paddingVertical: 20,
+    textAlign: "center",
   },
 });
 
