@@ -1,11 +1,14 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import authStorage from "../auth/storage";
+
 export const SIGNIN_LOADING = "SIGNIN_LOADING";
 export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_ERROR = "SIGNIN_ERROR";
 export const SIGNIN_FINISHED = "SIGNIN_FINISHED";
 export const USER_LOG_OUT = "USER_LOG_OUT";
+export const GET_USER = "GET_USER";
 
 const initialState = {
   email: "",
@@ -13,16 +16,6 @@ const initialState = {
   signinFormLoading: false,
   signinFormError: false,
   user: {},
-};
-
-const storeData = async (value) => {
-  try {
-    await AsyncStorage.setItem("token", value);
-    const token = await AsyncStorage.getItem("token");
-    console.log(token);
-  } catch (e) {
-    console.log("error from storeData", e);
-  }
 };
 
 export function userSignin(email, password) {
@@ -36,7 +29,7 @@ export function userSignin(email, password) {
         data: { email, password },
       });
       if (data.token) {
-        await storeData(data.token);
+        authStorage.storeToken(data.token);
       }
       dispatch({ type: SIGNIN_SUCCESS, payload: data.user });
     } catch (error) {
@@ -51,9 +44,33 @@ export function userSignin(email, password) {
 export function userLogOut() {
   return async function (dispatch) {
     try {
+      authStorage.removeToken();
       dispatch({
         type: USER_LOG_OUT,
         payload: {},
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function getUser() {
+  return async function (dispatch) {
+    try {
+      const token = await authStorage.getToken();
+      if (!token) return;
+      const { data } = await axios({
+        method: "GET",
+        baseURL: "http://10.0.2.2:8000",
+        url: "/user/userInfo",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: GET_USER,
+        payload: data,
       });
     } catch (error) {
       console.log(error.message);
@@ -89,6 +106,12 @@ function userSignInReducer(state = initialState, action) {
       };
     }
     case USER_LOG_OUT: {
+      return {
+        ...state,
+        user: action.payload,
+      };
+    }
+    case GET_USER: {
       return {
         ...state,
         user: action.payload,
