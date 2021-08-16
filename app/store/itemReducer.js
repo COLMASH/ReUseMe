@@ -3,7 +3,7 @@ import axios from "axios";
 export const LIST_ITEMS = "LIST_ITEMS";
 
 const initialState = {
-  item=[],
+  item: [],
 };
 
 function itemReducer(state = initialState, action) {
