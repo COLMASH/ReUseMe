@@ -1,22 +1,26 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
 
 import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
+import { getUser } from "./app/store/userSignInReducer";
 
 export default function RootComponent() {
-  const getToken = async () => await AsyncStorage.getItem("token");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   const { user } = useSelector((state) => {
     return {
       user: state.userSignInReducer.user,
     };
   });
-  console.log(user.name);
+
   return (
     <NavigationContainer theme={navigationTheme}>
       {user.name !== undefined ? <AppNavigator /> : <AuthNavigator />}

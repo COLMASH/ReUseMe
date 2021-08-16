@@ -9,12 +9,12 @@ function WelcomeScreen({ navigation }) {
     <ImageBackground
       blurRadius={2}
       style={styles.background}
-      source={require("../assets/background1.png")}
+      source={require("../assets/background3.jpg")}
     >
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/logoGris.png")} />
         <Text style={styles.tagline}>
-          Sell or donate rehab medical equipment that you don't use anymore
+          Sell or donate rehab medical equipment that you didn't use any more
         </Text>
       </View>
       <View style={styles.buttonsContainer}>
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     padding: 20,
     width: "100%",
+    opacity: 0.75,
   },
   logo: {
     width: 150,
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     paddingVertical: 20,
     textAlign: "center",
+    padding: 50,
   },
 });
 
