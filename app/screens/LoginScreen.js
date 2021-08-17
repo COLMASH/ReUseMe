@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import Screen from "../components/Screen";
 import { Form, FormField, SubmitButton } from "../components/forms";
-import { userSignin } from "../store/userSignInReducer";
+import { userSignin } from "../store/userReducer";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),

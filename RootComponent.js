@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
-import { getUser } from "./app/store/userSignInReducer";
+import { getUser } from "./app/store/userReducer";
 
 export default function RootComponent() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function RootComponent() {
 
   const { user } = useSelector((state) => {
     return {
-      user: state.userSignInReducer.user,
+      user: state.userReducer.user,
     };
   });
 
