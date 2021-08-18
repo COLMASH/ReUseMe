@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 5,
     textAlign: "center",
+    fontSize: 14,
   },
 });
 

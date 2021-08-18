@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     padding: 20,
     width: "100%",
-    opacity: 0.75,
+    opacity: 0.9,
   },
   logo: {
     width: 150,
