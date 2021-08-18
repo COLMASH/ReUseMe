@@ -4,19 +4,35 @@ import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import { Form, FormField, SubmitButton } from "../components/forms";
+import { useDispatch } from "react-redux";
+import { userSignup } from "../store/userReducer";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
+  lastname: Yup.string().required().label("Last Name"),
+  phone: Yup.number().required().min(6).label("Phone"),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
 function RegisterScreen() {
+  const dispatch = useDispatch();
+
+  const handleSignUp = ({ name, lastname, phone, email, password }) => {
+    dispatch(userSignup(name, lastname, phone, email, password));
+  };
+
   return (
     <Screen style={styles.container}>
       <Form
-        initialValues={{ name: "", email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        initialValues={{
+          name: "",
+          lastname: "",
+          phone: "",
+          email: "",
+          password: "",
+        }}
+        onSubmit={handleSignUp}
         validationSchema={validationSchema}
       >
         <FormField
@@ -24,6 +40,18 @@ function RegisterScreen() {
           icon="account"
           name="name"
           placeholder="Name"
+        />
+        <FormField
+          autoCorrect={false}
+          icon="account"
+          name="lastname"
+          placeholder="Last Name"
+        />
+        <FormField
+          autoCorrect={false}
+          icon="phone"
+          name="phone"
+          placeholder="Phone"
         />
         <FormField
           autoCapitalize="none"

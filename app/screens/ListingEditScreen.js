@@ -12,6 +12,9 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import useLocation from "../hooks/useLocation";
+import colors from "../config/colors";
+import { useDispatch } from "react-redux";
+import { createItem } from "../store/itemReducer";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -23,56 +26,56 @@ const validationSchema = Yup.object().shape({
 
 const categories = [
   {
-    backgroundColor: "#fc5c65",
-    icon: "floor-lamp",
-    label: "Furniture",
+    backgroundColor: colors.secondary,
+    icon: "wheelchair-accessibility",
+    label: "Wheel chairs (Elec.)",
     value: 1,
   },
   {
-    backgroundColor: "#fd9644",
-    icon: "car",
-    label: "Cars",
-    value: 2,
-  },
-  {
-    backgroundColor: "#fed330",
-    icon: "camera",
-    label: "Cameras",
-    value: 3,
-  },
-  {
-    backgroundColor: "#26de81",
-    icon: "cards",
-    label: "Games",
+    backgroundColor: colors.primary,
+    icon: "human-wheelchair",
+    label: "Wheel chairs (Mech.)",
     value: 4,
   },
   {
-    backgroundColor: "#2bcbba",
-    icon: "shoe-heel",
-    label: "Clothing",
+    backgroundColor: colors.secondary,
+    icon: "chair-rolling",
+    label: "Ergonomic Chairs",
+    value: 3,
+  },
+  {
+    backgroundColor: colors.primary,
+    icon: "hiking",
+    label: "Canes & Crutches",
+    value: 2,
+  },
+  {
+    backgroundColor: colors.secondary,
+    icon: "seat-individual-suite",
+    label: "Hospital Beds",
     value: 5,
   },
   {
-    backgroundColor: "#45aaf2",
-    icon: "basketball",
-    label: "Sports",
+    backgroundColor: colors.primary,
+    icon: "pill",
+    label: "Medicines",
     value: 6,
   },
   {
-    backgroundColor: "#4b7bec",
-    icon: "headphones",
-    label: "Movies & Music",
+    backgroundColor: colors.secondary,
+    icon: "ear-hearing",
+    label: "Audiovisual Aid",
     value: 7,
   },
   {
-    backgroundColor: "#a55eea",
-    icon: "book-open-variant",
-    label: "Books",
+    backgroundColor: colors.primary,
+    icon: "dog-service",
+    label: "Guide Dogs",
     value: 8,
   },
   {
-    backgroundColor: "#778ca3",
-    icon: "application",
+    backgroundColor: colors.secondary,
+    icon: "cog-outline",
     label: "Other",
     value: 9,
   },
@@ -80,6 +83,17 @@ const categories = [
 
 function ListingEditScreen() {
   const location = useLocation();
+
+  const dispatch = useDispatch();
+  const handleCreateItem = ({
+    title,
+    price,
+    description,
+    category,
+    images,
+  }) => {
+    dispatch(createItem(title, price, description, category, images));
+  };
 
   return (
     <Screen style={styles.container}>
@@ -91,11 +105,11 @@ function ListingEditScreen() {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleCreateItem}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />
-        <FormField maxLength={255} name="title" placeholder="Title" />
+        <FormField maxLength={100} name="title" placeholder="Title" />
         <FormField
           keyboardType="numeric"
           maxLength={8}
@@ -109,7 +123,7 @@ function ListingEditScreen() {
           numberOfColumns={3}
           PickerItemComponent={CategoryPickerItem}
           placeholder="Category"
-          width="50%"
+          width="70%"
         />
         <FormField
           maxLength={255}
@@ -118,7 +132,7 @@ function ListingEditScreen() {
           numberOfLines={3}
           placeholder="Description"
         />
-        <SubmitButton title="Post" />
+        <SubmitButton title="Post Item" />
       </Form>
     </Screen>
   );

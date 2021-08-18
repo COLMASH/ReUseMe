@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import { userLogOut } from "../store/userSignInReducer";
+import { userLogOut } from "../store/userReducer";
+import { getUser } from "../store/userReducer";
 
 const menuItems = [
   {
@@ -30,6 +31,16 @@ const menuItems = [
 function AccountScreen({ navigation }) {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  const { user } = useSelector((state) => {
+    return {
+      user: state.userReducer.user,
+    };
+  });
+
   const handleLogOut = () => {
     dispatch(userLogOut());
   };
@@ -38,9 +49,11 @@ function AccountScreen({ navigation }) {
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title="Mosh Hamedani"
-          subTitle="programmingwithmosh@gmail.com"
-          image={require("../assets/mosh.jpg")}
+          title={`${user.name} ${user.lastname}`}
+          subTitle={user.email}
+          image={{
+            uri: user.profilePicture,
+          }}
         />
       </View>
       <View style={styles.container}>
@@ -64,7 +77,7 @@ function AccountScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+        IconComponent={<Icon name="logout" backgroundColor={colors.danger} />}
         onPress={handleLogOut}
       />
     </Screen>
