@@ -13,7 +13,6 @@ const initialState = {
 export function createItem(title, price, description, category, images) {
   return async function (dispatch) {
     try {
-      console.log(title, price, description, category.label, images);
       const token = await authStorage.getToken();
       if (!token) return;
       const data = new FormData();

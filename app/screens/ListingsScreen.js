@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,10 +9,17 @@ import Screen from "../components/Screen";
 import { getAllItems } from "../store/itemReducer";
 
 function ListingsScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllItems());
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setIsLoading(true);
+    dispatch(getAllItems());
+    setIsLoading(false);
   }, []);
 
   const { items } = useSelector((state) => {
@@ -20,9 +27,12 @@ function ListingsScreen({ navigation }) {
       items: state.itemReducer.items,
     };
   });
+
   return (
     <Screen style={styles.screen}>
       <FlatList
+        refreshing={isLoading}
+        onRefresh={onRefresh}
         data={items}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
@@ -43,7 +53,7 @@ function ListingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.light,
+    backgroundColor: colors.green,
   },
 });
 

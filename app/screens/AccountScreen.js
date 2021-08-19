@@ -12,7 +12,7 @@ import { getUser } from "../store/userReducer";
 
 const menuItems = [
   {
-    title: "My Listings",
+    title: "My Items",
     icon: {
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
@@ -86,7 +86,7 @@ function AccountScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.light,
+    backgroundColor: colors.green,
   },
   container: {
     marginVertical: 20,
