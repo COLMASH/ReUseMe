@@ -7,6 +7,7 @@ import {
   ListItemDeleteAction,
   ListItemSeparator,
 } from "../components/lists";
+import colors from "../config/colors";
 
 const initialMessages = [
   {
@@ -34,7 +35,7 @@ function MessagesScreen(props) {
   };
 
   return (
-    <Screen>
+    <Screen style={styles.container}>
       <FlatList
         data={messages}
         keyExtractor={(message) => message.id.toString()}
@@ -66,6 +67,11 @@ function MessagesScreen(props) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    // padding: 10,
+    backgroundColor: colors.green,
+  },
+});
 
 export default MessagesScreen;
