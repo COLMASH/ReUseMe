@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Screen from "../components/Screen";
 import { Form, FormField, SubmitButton } from "../components/forms";
 import { userSignin } from "../store/userReducer";
+import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -55,6 +56,7 @@ function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    backgroundColor: colors.green,
   },
   logo: {
     width: 150,

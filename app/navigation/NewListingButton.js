@@ -9,7 +9,7 @@ function NewListingButton({ onPress }) {
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <MaterialCommunityIcons
-          name="plus-circle"
+          name="cloud-upload"
           color={colors.white}
           size={40}
         />

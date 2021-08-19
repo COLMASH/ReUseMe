@@ -4,10 +4,14 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 import Text from "./Text";
 import colors from "../config/colors";
+
+const { width } = Dimensions.get("window");
+const height = width * 0.6;
 
 function Card({ title, subTitle, image, onPress }) {
   return (
@@ -38,8 +42,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   image: {
-    width: "100%",
-    height: 200,
+    width,
+    height,
+    resizeMode: "contain",
+    alignSelf: "center",
   },
   subTitle: {
     color: colors.secondary,

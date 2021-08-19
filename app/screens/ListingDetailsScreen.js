@@ -1,24 +1,37 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
+import Slider from "../components/slider";
 
 function ListingDetailsScreen({ route }) {
-  const listing = route.params;
+  item = route.params;
+
+  let images = [item.picture1, item.picture2, item.picture3];
+
+  const { user } = useSelector((state) => {
+    return {
+      user: state.userReducer.user,
+    };
+  });
 
   return (
     <View>
-      <Image style={styles.image} source={listing.image} />
+      <Slider images={images} />
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.price}>${listing.price}</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>${item.price}</Text>
+        <Text style={styles.description}>{item.description}</Text>
         <View style={styles.userContainer}>
           <ListItem
-            image={require("../assets/mosh.jpg")}
-            title="Mosh Hamedani"
-            subTitle="5 Listings"
+            image={{
+              uri: user.profilePicture,
+            }}
+            title={`${user.name} ${user.lastname}`}
+            subTitle={user.email}
           />
         </View>
       </View>
@@ -29,10 +42,7 @@ function ListingDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     padding: 20,
-  },
-  image: {
-    width: "100%",
-    height: 300,
+    backgroundColor: colors.green,
   },
   price: {
     color: colors.secondary,
@@ -44,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "500",
   },
+  description: { fontSize: 20, fontWeight: "500" },
   userContainer: {
     marginVertical: 40,
   },
