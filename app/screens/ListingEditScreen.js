@@ -12,12 +12,11 @@ import {
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
-import useLocation from "../hooks/useLocation";
 import colors from "../config/colors";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createItem } from "../store/itemReducer";
 import routes from "../navigation/routes";
-import { getAllItems } from "../store/itemReducer";
+import SetLocation from "../components/SetLocation";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -85,18 +84,24 @@ const categories = [
 ];
 
 function ListingEditScreen({ navigation }) {
-  const location = useLocation();
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
 
+  const { itemLocation } = useSelector((state) => {
+    return {
+      itemLocation: state.itemReducer.itemLocation,
+    };
+  });
+
   const handleCreateItem = (
     { title, price, description, category, images },
     onSubmitProps
   ) => {
-    dispatch(createItem(title, price, description, category, images));
-    dispatch(getAllItems());
+    dispatch(
+      createItem(title, price, description, category, images, itemLocation)
+    );
     onSubmitProps.resetForm(), setPrice("");
     setTitle("");
     setDescription("");
@@ -158,6 +163,7 @@ function ListingEditScreen({ navigation }) {
             onChange={(e) => setDescription(e)}
             value={description}
           />
+          <SetLocation />
           <SubmitButton title="Post Item" />
           <ResetButton title="Reset Form" />
         </Form>

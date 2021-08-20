@@ -4,13 +4,22 @@ import authStorage from "../auth/storage";
 
 export const GET_ALL_ITEMS = "GET_ALL_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
+export const SET_ITEM_LOCATION = "SET_ITEM_LOCATION";
 
 const initialState = {
   item: {},
   items: {},
+  itemLocation: {},
 };
 
-export function createItem(title, price, description, category, images) {
+export function createItem(
+  title,
+  price,
+  description,
+  category,
+  images,
+  itemLocation
+) {
   return async function (dispatch) {
     try {
       const token = await authStorage.getToken();
@@ -27,6 +36,12 @@ export function createItem(title, price, description, category, images) {
       }
       if (description) {
         data.append("description", description);
+      }
+      if (itemLocation.latitude) {
+        data.append("latitude", itemLocation.latitude.toString());
+      }
+      if (itemLocation.longitude) {
+        data.append("longitude", itemLocation.longitude.toString());
       }
       if (images[0]) {
         data.append("picture1", {
@@ -49,7 +64,6 @@ export function createItem(title, price, description, category, images) {
           type: "image/jpg",
         });
       }
-      console.log(data);
       const { data: item } = await axios({
         method: "POST",
         baseURL: "http://10.0.2.2:8000",
@@ -88,6 +102,19 @@ export function getAllItems() {
   };
 }
 
+export function setItemLocation(location) {
+  return async function (dispatch) {
+    try {
+      dispatch({
+        type: SET_ITEM_LOCATION,
+        payload: location,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
 function itemReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_ITEMS: {
@@ -100,6 +127,12 @@ function itemReducer(state = initialState, action) {
       return {
         ...state,
         item: action.payload,
+      };
+    }
+    case SET_ITEM_LOCATION: {
+      return {
+        ...state,
+        itemLocation: action.payload,
       };
     }
     default: {
