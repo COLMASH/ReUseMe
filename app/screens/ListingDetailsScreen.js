@@ -1,11 +1,12 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import Slider from "../components/slider";
+import ShowLocation from "../components/ShowLocation";
 
 function ListingDetailsScreen({ route }) {
   item = route.params;
@@ -19,23 +20,27 @@ function ListingDetailsScreen({ route }) {
   });
 
   return (
-    <View>
-      <Slider images={images} />
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.price}>${item.price}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={styles.userContainer}>
-          <ListItem
-            image={{
-              uri: user.profilePicture,
-            }}
-            title={`${user.name} ${user.lastname}`}
-            subTitle={user.email}
-          />
+    <ScrollView>
+      <View>
+        <Slider images={images} />
+        <View style={styles.detailsContainer}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.price}>${item.price}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+          <View style={styles.detailsContainer}></View>
+          <ShowLocation item={item} />
+          <View style={styles.userContainer}>
+            <ListItem
+              image={{
+                uri: user.profilePicture,
+              }}
+              title={`${user.name} ${user.lastname}`}
+              subTitle={user.email}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
