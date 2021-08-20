@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
   images: Yup.array().min(1, "Please select at least one image."),
 });
 
-const categories = [
+const categoriesObj = [
   {
     backgroundColor: colors.secondary,
     icon: "wheelchair-accessibility",
@@ -147,7 +147,7 @@ function ListingEditScreen({ navigation }) {
             value={price}
           />
           <Picker
-            items={categories}
+            items={categoriesObj}
             name="category"
             numberOfColumns={3}
             PickerItemComponent={CategoryPickerItem}

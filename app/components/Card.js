@@ -13,7 +13,7 @@ import colors from "../config/colors";
 const { width } = Dimensions.get("window");
 const height = width * 0.6;
 
-function Card({ title, subTitle, image, onPress }) {
+function Card({ title, subTitle, image, category, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -24,6 +24,9 @@ function Card({ title, subTitle, image, onPress }) {
           </Text>
           <Text style={styles.subTitle} numberOfLines={2}>
             {subTitle}
+          </Text>
+          <Text style={styles.category} numberOfLines={1}>
+            {category}
           </Text>
         </View>
       </View>
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   detailsContainer: {
-    padding: 20,
+    padding: 15,
   },
   image: {
     width,
@@ -53,6 +56,9 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 7,
+  },
+  category: {
+    color: colors.danger,
   },
 });
 
