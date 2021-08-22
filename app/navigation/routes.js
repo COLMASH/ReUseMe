@@ -8,4 +8,5 @@ export default Object.freeze({
   MYITEMS: "MyItems",
   USERUPDATE: "UserUpdate",
   ACCOUNT: "Account",
+  ITEMUPDATE: "ItemUpdate",
 });

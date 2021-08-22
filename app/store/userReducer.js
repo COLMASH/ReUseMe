@@ -122,7 +122,9 @@ export function updateUser(name, lastname, phone, email, image) {
       if (email) {
         data.append("email", email);
       }
-      if (image[0]) {
+      if (image[0] === undefined || image[0] === "") {
+        data.append("profilePicture", "");
+      } else {
         data.append("profilePicture", {
           uri: image[0],
           name: "profilePicture.jpg",

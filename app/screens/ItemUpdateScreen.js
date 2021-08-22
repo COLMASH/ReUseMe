@@ -14,16 +14,16 @@ import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import colors from "../config/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { createItem } from "../store/itemReducer";
 import routes from "../navigation/routes";
 import SetLocation from "../components/SetLocation";
+import { updateItem } from "../store/itemReducer";
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required().min(1).label("Title"),
-  price: Yup.number().required().min(1).max(10000).label("Price"),
+  title: Yup.string().min(1).label("Title"),
+  price: Yup.number().min(1).max(10000).label("Price"),
   description: Yup.string().label("Description"),
-  category: Yup.object().required().nullable().label("Category"),
-  images: Yup.array().min(1, "Please select at least one image."),
+  category: Yup.object().nullable().label("Category"),
+  images: Yup.array(),
 });
 
 const categoriesObj = [
@@ -83,7 +83,9 @@ const categoriesObj = [
   },
 ];
 
-function ListingEditScreen({ navigation }) {
+function ItemUpdateScreen({ navigation, route }) {
+  item = route.params;
+
   const [price, setPrice] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -95,17 +97,25 @@ function ListingEditScreen({ navigation }) {
     };
   });
 
-  const handleCreateItem = (
+  const handleUpdateItem = (
     { title, price, description, category, images },
     onSubmitProps
   ) => {
     dispatch(
-      createItem(title, price, description, category, images, itemLocation)
+      updateItem(
+        item._id,
+        title,
+        price,
+        description,
+        category,
+        images,
+        itemLocation
+      )
     );
     onSubmitProps.resetForm(), setPrice("");
     setTitle("");
     setDescription("");
-    navigation.navigate(routes.FEED);
+    navigation.navigate(routes.MYITEMS);
   };
 
   const handleReset = () => {
@@ -123,14 +133,14 @@ function ListingEditScreen({ navigation }) {
             price: "",
             description: "",
             category: null,
-            images: [],
+            images: [item.picture1, item.picture2, item.picture3],
           }}
-          onSubmit={handleCreateItem}
+          onSubmit={handleUpdateItem}
           validationSchema={validationSchema}
           onReset={handleReset}
         >
           <FormImagePicker name="images" />
-          <SetLocation />
+          <SetLocation item={item} />
           <FormField
             maxLength={100}
             name="title"
@@ -164,7 +174,7 @@ function ListingEditScreen({ navigation }) {
             onChange={(e) => setDescription(e)}
             value={description}
           />
-          <SubmitButton title="Post Item" />
+          <SubmitButton title="Update Item" />
           <ResetButton title="Reset Form" />
         </Form>
       </ScrollView>
@@ -178,4 +188,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
   },
 });
-export default ListingEditScreen;
+export default ItemUpdateScreen;

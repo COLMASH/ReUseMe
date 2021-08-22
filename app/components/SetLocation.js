@@ -7,11 +7,11 @@ import { setItemLocation } from "../store/itemReducer";
 const { width } = Dimensions.get("window");
 const height = width * 0.8;
 
-function SetLocation() {
+function SetLocation({ item }) {
   const dispatch = useDispatch();
   const [location, setLocation] = useState({
-    latitude: 4.624335,
-    longitude: -74.063644,
+    latitude: item ? parseFloat(item.latitude) : 4.624335,
+    longitude: item ? parseFloat(item.longitude) : -74.063644,
   });
 
   const handleSetLocation = (e) => {
@@ -26,8 +26,8 @@ function SetLocation() {
     <MapView
       style={styles.map}
       initialRegion={{
-        latitude: 4.624335,
-        longitude: -74.063644,
+        latitude: item ? parseFloat(item.latitude) : 4.624335,
+        longitude: item ? parseFloat(item.longitude) : -74.063644,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
