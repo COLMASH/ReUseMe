@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
-    width: "100%",
+    width: "90%",
     marginVertical: 10,
+    marginLeft: "5%",
   },
   text: {
     color: colors.white,
