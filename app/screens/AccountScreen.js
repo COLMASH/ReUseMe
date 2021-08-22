@@ -9,6 +9,7 @@ import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import { userLogOut } from "../store/userReducer";
 import { getUser } from "../store/userReducer";
+import LogOutButton from "../components/forms/LogOutButton";
 
 const menuItems = [
   {
@@ -17,12 +18,21 @@ const menuItems = [
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
+    targetScreen: routes.MYITEMS,
+  },
+  {
+    title: "Items may need",
+    icon: {
+      name: "cart",
+      backgroundColor: colors.secondary,
+    },
+    targetScreen: routes.MYITEMS,
   },
   {
     title: "My Messages",
     icon: {
       name: "email",
-      backgroundColor: colors.secondary,
+      backgroundColor: colors.primary,
     },
     targetScreen: routes.MESSAGES,
   },
@@ -54,6 +64,7 @@ function AccountScreen({ navigation }) {
           image={{
             uri: user.profilePicture,
           }}
+          onPress={() => navigation.navigate(routes.USERUPDATE)}
         />
       </View>
       <View style={styles.container}>
@@ -75,10 +86,11 @@ function AccountScreen({ navigation }) {
           )}
         />
       </View>
-      <ListItem
+      <LogOutButton
         title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor={colors.danger} />}
         onPress={handleLogOut}
+        color={colors.danger}
+        backgroundColor={colors.danger}
       />
     </Screen>
   );

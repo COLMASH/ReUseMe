@@ -12,6 +12,7 @@ export const SIGNUP_ERROR = "SIGNUP_ERROR";
 export const SIGNUP_FINISHED = "SIGNUP_FINISHED";
 export const USER_LOG_OUT = "USER_LOG_OUT";
 export const GET_USER = "GET_USER";
+export const UPDATE_USER = "UPDATE_USER";
 
 const initialState = {
   signinFormLoading: false,
@@ -103,6 +104,51 @@ export function userSignup(name, lastname, phone, email, password) {
   };
 }
 
+export function updateUser(name, lastname, phone, email, image) {
+  return async function (dispatch) {
+    try {
+      const token = await authStorage.getToken();
+      if (!token) return;
+      const data = new FormData();
+      if (name) {
+        data.append("name", name);
+      }
+      if (lastname) {
+        data.append("lastname", lastname);
+      }
+      if (phone) {
+        data.append("phone", phone);
+      }
+      if (email) {
+        data.append("email", email);
+      }
+      if (image[0]) {
+        data.append("profilePicture", {
+          uri: image[0],
+          name: "profilePicture.jpg",
+          type: "image/png",
+        });
+      }
+      const { data: user } = await axios({
+        method: "PUT",
+        baseURL: "http://10.0.2.2:8000",
+        url: "/user/userUpdate",
+        data,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch({
+        type: UPDATE_USER,
+        payload: user,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
 function userReducer(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_LOADING: {
@@ -165,6 +211,12 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         signupFormLoading: false,
+      };
+    }
+    case UPDATE_USER: {
+      return {
+        ...state,
+        user: action.payload,
       };
     }
     default: {

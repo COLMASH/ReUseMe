@@ -14,8 +14,8 @@ function ShowLocation({ item }) {
       initialRegion={{
         latitude: parseFloat(item.latitude),
         longitude: parseFloat(item.longitude),
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: 0.102,
+        longitudeDelta: 0.101,
       }}
     >
       <Circle
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   map: {
-    width: width,
+    width: width * 0.9,
     height: height,
   },
 });

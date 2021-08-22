@@ -5,4 +5,7 @@ export default Object.freeze({
   MESSAGES: "Messages",
   REGISTER: "Register",
   FEED: "Feed",
+  MYITEMS: "MyItems",
+  USERUPDATE: "UserUpdate",
+  ACCOUNT: "Account",
 });
