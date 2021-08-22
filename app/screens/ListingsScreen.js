@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   scroll: {
     position: "absolute",
     padding: 0,
+    marginRight: -40,
   },
   list: {
     marginTop: 50,
