@@ -10,8 +10,9 @@ import {
 import colors from "../config/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItem, getUserItems } from "../store/itemReducer";
+import routes from "../navigation/routes";
 
-function MyItemsScreen(props) {
+function MyItemsScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -48,7 +49,7 @@ function MyItemsScreen(props) {
             image={{
               uri: item.picture1,
             }}
-            onPress={() => console.log("Message selected", item)}
+            onPress={() => navigation.navigate(routes.ITEMUPDATE, item)}
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item._id)} />
             )}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
 import authStorage from "../auth/storage";
 
@@ -7,6 +8,7 @@ export const GET_USER_ITEMS = "GET_USER_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
 export const SET_ITEM_LOCATION = "SET_ITEM_LOCATION";
 export const DELETE_ITEM = "DELETE_ITEM";
+export const UPDATE_ITEM = "UPDATE_ITEM";
 
 const initialState = {
   item: {},
@@ -79,6 +81,88 @@ export function createItem(
       });
       dispatch({
         type: CREATE_ITEM,
+        payload: item,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function updateItem(
+  itemId,
+  title,
+  price,
+  description,
+  category,
+  images,
+  itemLocation
+) {
+  return async function (dispatch) {
+    try {
+      const token = await authStorage.getToken();
+      if (!token) return;
+      const data = new FormData();
+      if (itemId) {
+        data.append("itemId", itemId);
+      }
+      if (title) {
+        data.append("title", title);
+      }
+      if (category) {
+        data.append("category", category.label);
+      }
+      if (price) {
+        data.append("price", price);
+      }
+      if (description) {
+        data.append("description", description);
+      }
+      if (itemLocation.latitude) {
+        data.append("latitude", itemLocation.latitude.toString());
+      }
+      if (itemLocation.longitude) {
+        data.append("longitude", itemLocation.longitude.toString());
+      }
+      if (images[0] === undefined || images[0] === "") {
+        data.append("picture1", "");
+      } else {
+        data.append("picture1", {
+          uri: images[0],
+          name: "image0.jpg",
+          type: "image/jpg",
+        });
+      }
+      if (images[1] === undefined || images[1] === "") {
+        data.append("picture2", "");
+      } else {
+        data.append("picture2", {
+          uri: images[1],
+          name: "image1.jpg",
+          type: "image/jpg",
+        });
+      }
+      if (images[2] === undefined || images[2] === "") {
+        data.append("picture3", "");
+      } else {
+        data.append("picture3", {
+          uri: images[2],
+          name: "image2.jpg",
+          type: "image/jpg",
+        });
+      }
+      const { data: item } = await axios({
+        method: "PUT",
+        baseURL: "http://10.0.2.2:8000",
+        url: "/item/itemUpdate",
+        data,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch({
+        type: UPDATE_ITEM,
         payload: item,
       });
     } catch (error) {
@@ -198,6 +282,12 @@ function itemReducer(state = initialState, action) {
         userItems: state.userItems.filter(
           (item) => item._id !== action.payload._id
         ),
+      };
+    }
+    case UPDATE_ITEM: {
+      return {
+        ...state,
+        item: action.payload,
       };
     }
     default: {
