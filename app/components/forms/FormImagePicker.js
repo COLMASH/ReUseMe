@@ -8,21 +8,25 @@ function FormImagePicker({ name }) {
   const { errors, setFieldValue, touched, values } = useFormikContext();
   const imageUris = values[name];
 
+  const imageUrisFilt = imageUris.filter((image) => {
+    return image !== "" && image !== undefined;
+  });
+
   const handleAdd = (uri) => {
-    setFieldValue(name, [...imageUris, uri]);
+    setFieldValue(name, [...imageUrisFilt, uri]);
   };
 
   const handleRemove = (uri) => {
     setFieldValue(
       name,
-      imageUris.filter((imageUri) => imageUri !== uri)
+      imageUrisFilt.filter((imageUri) => imageUri !== uri)
     );
   };
 
   return (
     <>
       <ImageInputList
-        imageUris={imageUris}
+        imageUris={imageUrisFilt}
         onAddImage={handleAdd}
         onRemoveImage={handleRemove}
       />
