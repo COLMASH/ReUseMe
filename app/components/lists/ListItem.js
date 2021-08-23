@@ -13,6 +13,10 @@ function ListItem({
   IconComponent,
   onPress,
   renderRightActions,
+  chevronColor,
+  additionalInfo1,
+  additionalInfo2,
+  contactLabel,
 }) {
   return (
     <Swipeable renderRightActions={renderRightActions}>
@@ -21,6 +25,11 @@ function ListItem({
           {IconComponent}
           {image && <Image style={styles.image} source={image} />}
           <View style={styles.detailsContainer}>
+            {contactLabel && (
+              <Text style={styles.contactLabel} numberOfLines={1}>
+                {contactLabel}
+              </Text>
+            )}
             <Text style={styles.title} numberOfLines={1}>
               {title}
             </Text>
@@ -29,9 +38,19 @@ function ListItem({
                 {subTitle}
               </Text>
             )}
+            {additionalInfo1 && (
+              <Text style={styles.additionalInfo1} numberOfLines={1}>
+                {additionalInfo1}
+              </Text>
+            )}
+            {additionalInfo2 && (
+              <Text style={styles.additionalInfo2} numberOfLines={0}>
+                {additionalInfo2}
+              </Text>
+            )}
           </View>
           <MaterialCommunityIcons
-            color={colors.medium}
+            color={chevronColor ? colors[chevronColor] : colors.medium}
             name="chevron-right"
             size={25}
           />
@@ -60,6 +79,18 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     color: colors.medium,
+  },
+  additionalInfo1: {
+    color: colors.secondary,
+  },
+  additionalInfo2: {
+    color: colors.danger,
+  },
+  contactLabel: {
+    color: colors.primary,
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    fontSize: 20,
   },
   title: {
     fontWeight: "500",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch } from "react-redux";
 import { setItemLocation } from "../store/itemReducer";
@@ -23,21 +23,23 @@ function SetLocation({ item }) {
   };
 
   return (
-    <MapView
-      style={styles.map}
-      initialRegion={{
-        latitude: item ? parseFloat(item.latitude) : 4.624335,
-        longitude: item ? parseFloat(item.longitude) : -74.063644,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-    >
-      <Marker
-        coordinate={location}
-        draggable={true}
-        onDragEnd={handleSetLocation}
-      />
-    </MapView>
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: item ? parseFloat(item.latitude) : 4.624335,
+          longitude: item ? parseFloat(item.longitude) : -74.063644,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker
+          coordinate={location}
+          draggable={true}
+          onDragEnd={handleSetLocation}
+        />
+      </MapView>
+    </View>
   );
 }
 
@@ -46,6 +48,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 25,
+    overflow: "hidden",
   },
   map: {
     width: width,

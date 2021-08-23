@@ -21,7 +21,7 @@ const menuItems = [
     targetScreen: routes.MYITEMS,
   },
   {
-    title: "Items may need",
+    title: "I'm interested",
     icon: {
       name: "cart",
       backgroundColor: colors.secondary,

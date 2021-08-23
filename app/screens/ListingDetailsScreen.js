@@ -1,23 +1,17 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { useSelector } from "react-redux";
 
 import colors from "../config/colors";
 import ListItem from "../components/lists/ListItem";
 import Text from "../components/Text";
 import Slider from "../components/slider";
 import ShowLocation from "../components/ShowLocation";
+import routes from "../navigation/routes";
 
-function ListingDetailsScreen({ route }) {
+function ListingDetailsScreen({ route, navigation }) {
   item = route.params;
 
   let images = [item.picture1, item.picture2, item.picture3];
-
-  const { user } = useSelector((state) => {
-    return {
-      user: state.userReducer.user,
-    };
-  });
 
   return (
     <ScrollView>
@@ -32,10 +26,12 @@ function ListingDetailsScreen({ route }) {
           <View style={styles.userContainer}>
             <ListItem
               image={{
-                uri: user.profilePicture,
+                uri: item.creator.profilePicture,
               }}
-              title={`${user.name} ${user.lastname}`}
-              subTitle={user.email}
+              contactLabel="contact"
+              title={`${item.creator.name} ${item.creator.lastname}`}
+              subTitle={item.creator.email}
+              onPress={() => navigation.navigate(routes.CONTACT, item)}
             />
           </View>
         </View>
