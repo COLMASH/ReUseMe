@@ -55,7 +55,7 @@ function AppPicker({
       <Modal visible={modalVisible} animationType="slide">
         <Screen>
           <Button
-            color="secondary"
+            color="primary"
             title="Close"
             onPress={() => setModalVisible(false)}
           />

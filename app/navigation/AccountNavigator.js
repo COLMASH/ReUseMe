@@ -5,6 +5,7 @@ import MessagesScreen from "../screens/MessagesScreen";
 import MyItemsScreen from "../screens/MyItemsScreen";
 import UserUpdateScreen from "../screens/UserUpdateScreen";
 import ItemUpdateScreen from "../screens/ItemUpdateScreen";
+import MessageDetailScreen from "../screens/MessageDetailScreen";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,11 @@ const AccountNavigator = () => (
     <Stack.Screen
       name="ItemUpdate"
       component={ItemUpdateScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="MessageDetail"
+      component={MessageDetailScreen}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
 import authStorage from "../auth/storage";
 
