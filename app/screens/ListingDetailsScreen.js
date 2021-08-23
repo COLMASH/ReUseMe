@@ -10,28 +10,33 @@ import routes from "../navigation/routes";
 
 function ListingDetailsScreen({ route, navigation }) {
   item = route.params;
+  const itemSelected = item;
 
-  let images = [item.picture1, item.picture2, item.picture3];
+  const images = [
+    itemSelected.picture1,
+    itemSelected.picture2,
+    itemSelected.picture3,
+  ];
 
   return (
     <ScrollView>
       <View>
         <Slider images={images} />
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.price}>${item.price}</Text>
-          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.title}>{itemSelected.title}</Text>
+          <Text style={styles.price}>${itemSelected.price}</Text>
+          <Text style={styles.description}>{itemSelected.description}</Text>
           <View style={styles.detailsContainer}></View>
-          <ShowLocation item={item} />
+          <ShowLocation item={itemSelected} />
           <View style={styles.userContainer}>
             <ListItem
               image={{
-                uri: item.creator.profilePicture,
+                uri: itemSelected.creator.profilePicture,
               }}
               contactLabel="contact"
-              title={`${item.creator.name} ${item.creator.lastname}`}
-              subTitle={item.creator.email}
-              onPress={() => navigation.navigate(routes.CONTACT, item)}
+              title={`${itemSelected.creator.name} ${itemSelected.creator.lastname}`}
+              subTitle={itemSelected.creator.email}
+              onPress={() => navigation.navigate(routes.CONTACT, itemSelected)}
             />
           </View>
         </View>
