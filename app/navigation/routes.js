@@ -9,4 +9,6 @@ export default Object.freeze({
   USERUPDATE: "UserUpdate",
   ACCOUNT: "Account",
   ITEMUPDATE: "ItemUpdate",
+  CONTACT: "Contact",
+  MESSAGEDETAIL: "MessageDetail",
 });

@@ -6,7 +6,6 @@ import {
   Form,
   FormField,
   FormPicker as Picker,
-  ResetButton,
   SubmitButton,
 } from "../components/forms";
 import CategoryPickerItem from "../components/CategoryPickerItem";
@@ -17,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import routes from "../navigation/routes";
 import SetLocation from "../components/SetLocation";
 import { updateItem } from "../store/itemReducer";
+import Button from "../components/Button";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(1).label("Title"),
@@ -175,7 +175,11 @@ function ItemUpdateScreen({ navigation, route }) {
             value={description}
           />
           <SubmitButton title="Update Item" />
-          <ResetButton title="Reset Form" />
+          <Button
+            title="Cancel"
+            color="danger"
+            onPress={() => navigation.navigate(routes.MYITEMS)}
+          />
         </Form>
       </ScrollView>
     </Screen>

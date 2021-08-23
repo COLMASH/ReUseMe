@@ -1,67 +1,60 @@
-import React, { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
 
 import Screen from "../components/Screen";
-import {
-  ListItem,
-  ListItemDeleteAction,
-  ListItemSeparator,
-} from "../components/lists";
+import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserItems } from "../store/itemReducer";
+import routes from "../navigation/routes";
 
-const initialMessages = [
-  {
-    id: 1,
-    title: "Mosh Hamedani",
-    description: "Hey! Is this item still available?",
-    image: require("../assets/mosh.jpg"),
-  },
-  {
-    id: 2,
-    title: "Mosh Hamedani",
-    description:
-      "I'm interested in this item. When will you be able to post it?",
-    image: require("../assets/mosh.jpg"),
-  },
-];
+function MessageScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
-function MessagesScreen(props) {
-  const [messages, setMessages] = useState(initialMessages);
-  const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+    dispatch(getUserItems(user._id));
+  }, []);
 
-  const handleDelete = (message) => {
-    // Delete the message from messages
-    setMessages(messages.filter((m) => m.id !== message.id));
-  };
+  const onRefresh = useCallback(() => {
+    setIsLoading(true);
+    dispatch(getUserItems(user._id));
+    setIsLoading(false);
+  }, []);
+
+  const { userItems, user } = useSelector((state) => {
+    return {
+      userItems: state.itemReducer.userItems,
+      user: state.userReducer.user,
+    };
+  });
+
+  let userItemsFilt = userItems;
+
+  if (userItems.length > 0) {
+    userItemsFilt = userItems.filter((item) => {
+      return item.messages.length > 0;
+    });
+  }
 
   return (
     <Screen style={styles.container}>
       <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
+        data={userItemsFilt}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
           <ListItem
             title={item.title}
             subTitle={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
+            image={{
+              uri: item.picture1,
+            }}
+            onPress={() => navigation.navigate(routes.MESSAGEDETAIL, item)}
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-        onRefresh={() => {
-          setMessages([
-            {
-              id: 2,
-              title: "T2",
-              description: "D2",
-              image: require("../assets/mosh.jpg"),
-            },
-          ]);
-        }}
+        refreshing={isLoading}
+        onRefresh={onRefresh}
       />
     </Screen>
   );
@@ -69,9 +62,8 @@ function MessagesScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 10,
     backgroundColor: colors.green,
   },
 });
 
-export default MessagesScreen;
+export default MessageScreen;
