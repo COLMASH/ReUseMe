@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
@@ -16,15 +16,24 @@ const validationSchema = Yup.object().shape({
 
 function ContactScreen({ route, navigation }) {
   item = route.params;
+  const itemSelected = item;
 
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
 
   const handleCreateMessage = ({ message }, onSubmitProps) => {
-    dispatch(createMessage(message, item._id));
-    onSubmitProps.resetForm();
-    setMessage("");
-    navigation.navigate(routes.LISTING_DETAILS, item);
+    Alert.alert("Contact", "Are you sure you want to send this message?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(createMessage(message, itemSelected._id));
+          onSubmitProps.resetForm();
+          setMessage("");
+          navigation.navigate(routes.LISTING_DETAILS, itemSelected);
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   const handleReset = () => {
@@ -35,11 +44,11 @@ function ContactScreen({ route, navigation }) {
     <View style={styles.detailsContainer}>
       <ListItem
         image={{
-          uri: item.creator.profilePicture,
+          uri: itemSelected.creator.profilePicture,
         }}
-        title={`${item.creator.name} ${item.creator.lastname}`}
-        additionalInfo1={item.creator.email}
-        additionalInfo2={item.creator.phone}
+        title={`${itemSelected.creator.name} ${itemSelected.creator.lastname}`}
+        additionalInfo1={itemSelected.creator.email}
+        additionalInfo2={itemSelected.creator.phone}
         chevronColor="white"
       />
       <Form
@@ -63,7 +72,9 @@ function ContactScreen({ route, navigation }) {
         <Button
           title="Cancel"
           color="danger"
-          onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+          onPress={() =>
+            navigation.navigate(routes.LISTING_DETAILS, itemSelected)
+          }
         />
       </Form>
     </View>

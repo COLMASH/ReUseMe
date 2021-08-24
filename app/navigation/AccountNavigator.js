@@ -6,13 +6,14 @@ import MyItemsScreen from "../screens/MyItemsScreen";
 import UserUpdateScreen from "../screens/UserUpdateScreen";
 import ItemUpdateScreen from "../screens/ItemUpdateScreen";
 import MessageDetailScreen from "../screens/MessageDetailScreen";
+import SuscribedItemsScreen from "../screens/SuscribedItemsScreen";
 
 const Stack = createStackNavigator();
 
 const AccountNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="Account"
+      name="Accountt"
       component={AccountScreen}
       options={{ headerShown: false }}
     />
@@ -39,6 +40,11 @@ const AccountNavigator = () => (
     <Stack.Screen
       name="MessageDetail"
       component={MessageDetailScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="SuscribedItems"
+      component={SuscribedItemsScreen}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>

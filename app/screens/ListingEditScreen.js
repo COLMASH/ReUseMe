@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Alert } from "react-native";
 import * as Yup from "yup";
 
 import {
@@ -20,7 +20,7 @@ import SetLocation from "../components/SetLocation";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
-  price: Yup.number().required().min(1).max(10000).label("Price"),
+  price: Yup.number().required().min(0).max(10000).label("Price"),
   description: Yup.string().label("Description"),
   category: Yup.object().required().nullable().label("Category"),
   images: Yup.array().min(1, "Please select at least one image."),
@@ -105,13 +105,22 @@ function ListingEditScreen({ navigation }) {
     onSubmitProps.resetForm(), setPrice("");
     setTitle("");
     setDescription("");
+    alert("Item posted successfully!"); //Pendiente mejorar implementación de alerta
     navigation.navigate(routes.FEED);
   };
 
   const handleReset = () => {
-    setPrice("");
-    setTitle("");
-    setDescription("");
+    Alert.alert("Reset", "Are you sure you want to reset this form?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          setPrice("");
+          setTitle("");
+          setDescription("");
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   return (

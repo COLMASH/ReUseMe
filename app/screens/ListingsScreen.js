@@ -59,7 +59,7 @@ function ListingsScreen({ navigation }) {
         renderItem={({ item }) => (
           <Card
             title={item.title}
-            subTitle={"$" + item.price}
+            subTitle={item.price === 0 ? "FREE" : "$" + item.price}
             category={item.category}
             image={{
               uri: item.picture1,
