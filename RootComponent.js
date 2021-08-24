@@ -41,7 +41,7 @@ export default function RootComponent() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      {user.name !== undefined ? <AppNavigator /> : <AuthNavigator />}
+      {!!user && user.name !== undefined ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
