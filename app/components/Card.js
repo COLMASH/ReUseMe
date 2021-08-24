@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     height,
     resizeMode: "contain",
     alignSelf: "center",
+    marginTop: 15,
   },
   subTitle: {
     color: colors.secondary,
