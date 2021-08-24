@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Image, StyleSheet, ScrollView, Dimensions } from "react-native";
 
 import colors from "../config/colors";
-import Text from "../components/Text";
+import Text from "./Text";
 
 const { width } = Dimensions.get("window");
 const height = width * 0.8;
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   scroll: {
     width,
     height,
+    backgroundColor: colors.green,
   },
   pagination: {
     flexDirection: "row",
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     margin: 3,
   },
-  image: { width, height, resizeMode: "contain" },
+  image: { width, height, resizeMode: "contain", borderRadius: 10 },
 });
 
 export default Slider;

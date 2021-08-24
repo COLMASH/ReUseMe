@@ -21,6 +21,7 @@ function RegisterScreen() {
 
   const handleSignUp = ({ name, lastname, phone, email, password }) => {
     dispatch(userSignup(name, lastname, phone, email, password));
+    alert("User registered successfully!"); //Pendiente mejorar implementación de alerta
   };
 
   return (

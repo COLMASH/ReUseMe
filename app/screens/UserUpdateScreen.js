@@ -35,6 +35,7 @@ function UserUpdate({ navigation }) {
     setPhone("");
     setEmail("");
     navigation.navigate(routes.ACCOUNT);
+    alert("Profile updated successfully!"); //Pendiente mejorar implementación de alerta
   };
 
   const { user } = useSelector((state) => {

@@ -7,8 +7,11 @@ export default Object.freeze({
   FEED: "Feed",
   MYITEMS: "MyItems",
   USERUPDATE: "UserUpdate",
-  ACCOUNT: "Account",
+  ACCOUNT: "Accountt",
   ITEMUPDATE: "ItemUpdate",
   CONTACT: "Contact",
   MESSAGEDETAIL: "MessageDetail",
+  LISTINGS: "Listings",
+  INTERESTS: "SuscribedItems",
+  LISTINGDETAILS: "ListingDetails",
 });
