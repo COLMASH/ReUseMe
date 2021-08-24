@@ -13,6 +13,8 @@ export const SIGNUP_FINISHED = "SIGNUP_FINISHED";
 export const USER_LOG_OUT = "USER_LOG_OUT";
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const USER_SUSCRIBE_ITEM = "USER_SUSCRIBE_ITEM";
+export const USER_UNSUSCRIBE_ITEM = "USER_UNSUSCRIBE_ITEM";
 
 const initialState = {
   signinFormLoading: false,
@@ -20,6 +22,7 @@ const initialState = {
   signupFormLoading: false,
   signupFormError: false,
   user: {},
+  userSuscribedItems: {},
 };
 
 export function userSignin(email, password) {
@@ -151,6 +154,58 @@ export function updateUser(name, lastname, phone, email, image) {
   };
 }
 
+export function userSuscribeItem(itemId) {
+  return async function (dispatch) {
+    try {
+      const token = await authStorage.getToken();
+      if (!token) return;
+      const { data } = await axios({
+        method: "PUT",
+        baseURL: "http://10.0.2.2:8000",
+        url: "/user/userSuscribeItems",
+        data: {
+          itemId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: USER_SUSCRIBE_ITEM,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+export function userUnsuscribeItem(itemId) {
+  return async function (dispatch) {
+    try {
+      const token = await authStorage.getToken();
+      if (!token) return;
+      const { data } = await axios({
+        method: "PUT",
+        baseURL: "http://10.0.2.2:8000",
+        url: "/user/userUnsuscribeItems",
+        data: {
+          itemId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: USER_UNSUSCRIBE_ITEM,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
 function userReducer(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_LOADING: {
@@ -219,6 +274,18 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case USER_SUSCRIBE_ITEM: {
+      return {
+        ...state,
+        userSuscribedItems: action.payload,
+      };
+    }
+    case USER_UNSUSCRIBE_ITEM: {
+      return {
+        ...state,
+        userSuscribedItems: action.payload,
       };
     }
     default: {

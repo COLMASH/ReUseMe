@@ -53,12 +53,22 @@ const styles = StyleSheet.create({
   subTitle: {
     color: colors.secondary,
     fontWeight: "bold",
+    marginBottom: 3,
+    backgroundColor: colors.light,
+    paddingLeft: 10,
+    borderRadius: 20,
   },
   title: {
-    marginBottom: 7,
+    marginBottom: 3,
+    backgroundColor: colors.light,
+    borderRadius: 20,
+    paddingLeft: 10,
   },
   category: {
     color: colors.danger,
+    paddingLeft: 10,
+    backgroundColor: colors.light,
+    borderRadius: 20,
   },
 });
 

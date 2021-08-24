@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, Alert } from "react-native";
 
 import Screen from "../components/Screen";
 import {
@@ -34,7 +34,15 @@ function MyItemsScreen({ navigation }) {
   });
 
   const handleDelete = (itemId) => {
-    dispatch(deleteItem(itemId));
+    Alert.alert("Delete", "Are you sure you want to delete this item?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(deleteItem(itemId));
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   return (
@@ -66,6 +74,8 @@ function MyItemsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.green,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

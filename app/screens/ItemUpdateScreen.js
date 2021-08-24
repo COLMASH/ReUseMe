@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Alert } from "react-native";
 import * as Yup from "yup";
 
 import {
@@ -115,13 +115,22 @@ function ItemUpdateScreen({ navigation, route }) {
     onSubmitProps.resetForm(), setPrice("");
     setTitle("");
     setDescription("");
+    alert("Item updated successfully!"); //Pendiente mejorar implementación de alerta
     navigation.navigate(routes.MYITEMS);
   };
 
   const handleReset = () => {
-    setPrice("");
-    setTitle("");
-    setDescription("");
+    Alert.alert("Reset", "Are you sure you want to reset this form?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          setPrice("");
+          setTitle("");
+          setDescription("");
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   return (

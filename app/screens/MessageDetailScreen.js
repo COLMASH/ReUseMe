@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { Alert, FlatList, StyleSheet } from "react-native";
 
 import Screen from "../components/Screen";
 import {
@@ -40,9 +40,17 @@ function MessageDetailScreen({ route }) {
     .messages;
 
   const handleDelete = (messageId) => {
-    dispatch(deleteMessage(messageId));
-    messages.filter((message) => message !== messageId);
-    setRemoved(true);
+    Alert.alert("Delete", "Are you sure you want to delete this message?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(deleteMessage(messageId));
+          messages.filter((message) => message !== messageId);
+          setRemoved(true);
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   return (
@@ -74,6 +82,8 @@ function MessageDetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.green,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 });
 

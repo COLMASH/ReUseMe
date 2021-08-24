@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
@@ -22,10 +22,18 @@ function ContactScreen({ route, navigation }) {
   const dispatch = useDispatch();
 
   const handleCreateMessage = ({ message }, onSubmitProps) => {
-    dispatch(createMessage(message, itemSelected._id));
-    onSubmitProps.resetForm();
-    setMessage("");
-    navigation.navigate(routes.LISTING_DETAILS, itemSelected);
+    Alert.alert("Contact", "Are you sure you want to send this message?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(createMessage(message, itemSelected._id));
+          onSubmitProps.resetForm();
+          setMessage("");
+          navigation.navigate(routes.LISTING_DETAILS, itemSelected);
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   const handleReset = () => {

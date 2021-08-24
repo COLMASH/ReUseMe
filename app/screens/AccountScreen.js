@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ListItem, ListItemSeparator } from "../components/lists";
@@ -26,7 +26,7 @@ const menuItems = [
       name: "cart",
       backgroundColor: colors.secondary,
     },
-    targetScreen: routes.MYITEMS,
+    targetScreen: routes.INTERESTS,
   },
   {
     title: "My Messages",
@@ -52,7 +52,15 @@ function AccountScreen({ navigation }) {
   });
 
   const handleLogOut = () => {
-    dispatch(userLogOut());
+    Alert.alert("Log Out", "Are you sure you want to end session?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(userLogOut());
+        },
+      },
+      { text: "No" },
+    ]);
   };
 
   return (
@@ -99,6 +107,8 @@ function AccountScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.green,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   container: {
     marginVertical: 20,
