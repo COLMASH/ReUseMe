@@ -11,9 +11,13 @@ import colors from "../config/colors";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
   lastname: Yup.string().required().label("Last Name"),
-  phone: Yup.number().required().min(6).label("Phone"),
+  phone: Yup.number().required().min(7).label("Phone"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(3).label("Password"),
+  passwordConfirmation: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Passwords must match"
+  ),
 });
 
 function RegisterScreen() {
@@ -33,6 +37,7 @@ function RegisterScreen() {
           phone: "",
           email: "",
           password: "",
+          passwordConfirmation: "",
         }}
         onSubmit={handleSignUp}
         validationSchema={validationSchema}
@@ -70,6 +75,15 @@ function RegisterScreen() {
           icon="lock"
           name="password"
           placeholder="Password"
+          secureTextEntry
+          textContentType="password"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="passwordConfirmation"
+          placeholder="Password Confirmation"
           secureTextEntry
           textContentType="password"
         />

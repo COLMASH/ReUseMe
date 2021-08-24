@@ -10,7 +10,7 @@ import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(3).label("Password"),
 });
 
 function LoginScreen() {

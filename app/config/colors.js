@@ -10,4 +10,5 @@ export default {
   green: "#DAFFBC",
   yellow: "#F3F6B0",
   dangerMap: "rgba(244,0,0,0.2)",
+  greenTrans: "rgba(0,158,31,0.4)",
 };
