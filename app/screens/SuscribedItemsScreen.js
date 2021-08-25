@@ -11,6 +11,7 @@ import colors from "../config/colors";
 import { useDispatch, useSelector } from "react-redux";
 import routes from "../navigation/routes";
 import { getUser, userUnsuscribeItem } from "../store/userReducer";
+import { getAllItems } from "../store/itemReducer";
 
 function SuscribedItemsScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,12 +20,14 @@ function SuscribedItemsScreen({ navigation }) {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getAllItems());
     setRemoved(false);
   }, [removed]);
 
   const onRefresh = useCallback(() => {
     setIsLoading(true);
     dispatch(getUser());
+    dispatch(getAllItems());
     setIsLoading(false);
   }, []);
 
