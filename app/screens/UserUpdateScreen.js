@@ -14,7 +14,7 @@ import Button from "../components/Button";
 const validationSchema = Yup.object().shape({
   name: Yup.string().label("Name"),
   lastname: Yup.string().label("Last Name"),
-  phone: Yup.number().min(6).label("Phone"),
+  phone: Yup.number().min(7).label("Phone"),
   email: Yup.string().email().label("Email"),
 });
 

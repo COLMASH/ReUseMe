@@ -20,7 +20,7 @@ import Button from "../components/Button";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().min(1).label("Title"),
-  price: Yup.number().min(1).max(10000).label("Price"),
+  price: Yup.number().min(0).max(10000).label("Price"),
   description: Yup.string().label("Description"),
   category: Yup.object().nullable().label("Category"),
   images: Yup.array(),
