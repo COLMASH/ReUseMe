@@ -9,6 +9,7 @@ import Screen from "../components/Screen";
 import { getAllItems } from "../store/itemReducer";
 import Filter from "../components/Filter";
 import Text from "../components/Text";
+import { getUser } from "../store/userReducer";
 
 function ListingsScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,11 +18,13 @@ function ListingsScreen({ navigation }) {
 
   useEffect(() => {
     dispatch(getAllItems());
+    dispatch(getUser());
   }, []);
 
   const onRefresh = useCallback(() => {
     setIsLoading(true);
     dispatch(getAllItems());
+    dispatch(getUser());
     setIsLoading(false);
   }, []);
 
